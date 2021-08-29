@@ -1,10 +1,11 @@
 {
 	"manifest_version": 2,
 	"name": "Miqueliana",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"background": {
 		"scripts": ["miqueliana_background.js"]
 	},
+	"browser_action": {},
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
