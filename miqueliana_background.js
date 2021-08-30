@@ -1,12 +1,25 @@
 console.log("hello");
 
-function handleActionClick() {
-	console.log("action clicked.");
-
-	chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-		console.log(tabs);
-		chrome.tabs.sendMessage(tabs[0].id, { message: "hello from bakground script." })
-	})
+function getCurrentTab() {
+	return new Promise((resolve, reject) => {
+		chrome.tabs.query({ currentWindow: true, highlighted: true }, (tabs) => {
+			if (chrome.runtime.lastError) {
+				reject(chrome.runtime.lastError);
+			}
+			resolve(tabs[0]);
+		});
+	});
 }
 
-chrome.browserAction.onClicked.addListener(handleActionClick);
+async function sendCommand(commandName) {
+	try {
+		const tab = await getCurrentTab();
+		chrome.tabs.sendMessage(tab.id, { message: commandName });
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+chrome.browserAction.onClicked.addListener(async () => {
+	await sendCommand(`say-hello`);
+});
