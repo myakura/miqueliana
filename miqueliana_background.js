@@ -1,5 +1,3 @@
-console.log("hello");
-
 function flashBadge({ success = true }) {
 	// credit: https://github.com/chitsaou/copy-as-markdown
 	const text = success ? `✔` : `✘`;
