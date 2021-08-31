@@ -1,8 +1,10 @@
 console.log("hello");
 
 function getSelectionFragment() {
-	// TODO: handle empty selections
 	const selection = window.getSelection();
+	if (selection.type !== `Range`) {
+		return null;
+	}
 	const range = selection.getRangeAt(0);
 	return range.cloneContents();
 }
