@@ -1,5 +1,3 @@
-console.log("hello");
-
 function getSelectionFragment() {
 	const selection = window.getSelection();
 	if (selection.type !== `Range`) {
