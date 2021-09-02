@@ -15,6 +15,24 @@ function flashBadge({ success = true }) {
 	}, timeout);
 }
 
+function copyText(text) {
+	const textarea = document.createElement(`textarea`);
+	document.body.append(textarea);
+
+	textarea.value = text;
+	textarea.select();
+
+	const success = document.execCommand(`copy`);
+	if (success) {
+		console.log(`copy success.`);
+		console.log(text);
+	} else {
+		console.log(`copy failed.`);
+	}
+
+	textarea.remove();
+}
+
 function getCurrentTab() {
 	return new Promise((resolve, reject) => {
 		chrome.tabs.query({ currentWindow: true, highlighted: true }, (tabs) => {
@@ -37,5 +55,13 @@ async function sendCommand(commandName) {
 }
 
 chrome.browserAction.onClicked.addListener(async () => {
-	await sendCommand(`say-hello`);
+	try {
+		await sendCommand(`say-hello`);
+		copyText(`hello`);
+		flashBadge();
+	}
+	catch (error) {
+		console.error(error);
+		flashBadge({ success: false });
+	}
 });
