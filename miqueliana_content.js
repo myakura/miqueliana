@@ -11,7 +11,7 @@ function createFragmentWalker(fragment) {
 	if (!fragment) {
 		return null;
 	}
-	const whatToShow = Node.ELEMENT_NODE + Node.TEXT_NODE;
+	const whatToShow = NodeFilter.SHOW_ELEMENT + NodeFilter.SHOW_TEXT;
 	const treeWalker = document.createTreeWalker(fragment, whatToShow);
 	return treeWalker;
 }
