@@ -1,7 +1,7 @@
 function flashBadge({ success = true }) {
 	// credit: https://github.com/chitsaou/copy-as-markdown
 	const text = success ? `✔` : `✘`;
-	const color = success ? `hsl(135deg 70% 30%)` : `hsl(0deg 80% 40%)`;
+	const color = success ? `hsl(135, 70%, 30%)` : `hsl(0, 80%, 40%)`;
 	const emptyText = ``;
 	const transparent = `#000f`;
 	const timeout = 1000;
