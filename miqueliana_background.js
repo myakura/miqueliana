@@ -58,7 +58,7 @@ chrome.browserAction.onClicked.addListener(async () => {
 	try {
 		await sendCommand(`say-hello`);
 		copyText(`hello`);
-		flashBadge();
+		flashBadge({ success: true });
 	}
 	catch (error) {
 		console.error(error);
