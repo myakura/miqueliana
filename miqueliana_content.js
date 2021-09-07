@@ -20,11 +20,21 @@ function walkTree(treeWalker) {
 	if (!treeWalker) {
 		return null;
 	}
+	let markdown = ``;
 	let currentNode = treeWalker.firstChild();
 	while (currentNode) {
 		console.log(currentNode);
+		if (currentNode.nodeType === Node.ELEMENT_NODE && currentNode.tagname === `P`) {
+			markdown += `\n`;
+		}
+		if (currentNode.nodeType === Node.TEXT_NODE) {
+			if (!/^\s+$/.test(currentNode)) {
+				markdown += currentNode.nodeValue;
+			}
+		}
 		currentNode = treeWalker.nextNode();
 	}
+	console.log(markdown);
 }
 
 function handleMessage(message) {
