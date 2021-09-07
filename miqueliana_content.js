@@ -28,7 +28,7 @@ function walkTree(treeWalker) {
 			markdown += `\n`;
 		}
 		if (currentNode.nodeType === Node.TEXT_NODE) {
-			if (!/^\s+$/.test(currentNode)) {
+			if (!/^\s+$/.test(currentNode.nodeValue)) {
 				markdown += currentNode.nodeValue;
 			}
 		}
