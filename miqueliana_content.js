@@ -16,6 +16,26 @@ function createFragmentWalker(fragment) {
 	return treeWalker;
 }
 
+function isElement(node) {
+	return node.nodeType === Node.ELEMENT_NODE;
+}
+
+function elementName(node) {
+	return node?.tagName?.toLowerCase();
+}
+
+function isElementType(node, name) {
+	return isElement(node) && elementName(name);
+}
+
+function isText(node) {
+	return node.nodeType === Node.TEXT_NODE;
+}
+
+function isEmptyText(node) {
+	return isText(node) && /^\s+$/.test(node.nodeValue);
+}
+
 function walkTree(treeWalker) {
 	if (!treeWalker) {
 		return null;
@@ -24,11 +44,13 @@ function walkTree(treeWalker) {
 	let currentNode = treeWalker.firstChild();
 	while (currentNode) {
 		console.log(currentNode);
-		if (currentNode.nodeType === Node.ELEMENT_NODE && currentNode.tagname === `P`) {
-			markdown += `\n`;
+		if (isElement(currentNode)) {
+			if (isElementType(currentNode, `p`)) {
+				markdown += `\n`;
+			}
 		}
-		if (currentNode.nodeType === Node.TEXT_NODE) {
-			if (!/^\s+$/.test(currentNode.nodeValue)) {
+		if (isText(currentNode)) {
+			if (!isEmptyText(currentNode)) {
 				markdown += currentNode.nodeValue;
 			}
 		}
