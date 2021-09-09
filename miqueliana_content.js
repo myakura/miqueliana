@@ -28,6 +28,10 @@ function isElementType(node, name) {
 	return isElement(node) && elementName(node) === name;
 }
 
+function isElementTypeOneOf(node, names) {
+	return isElement(node) && names.includes(elementName(node));
+}
+
 function isText(node) {
 	return node.nodeType === Node.TEXT_NODE;
 }
@@ -47,6 +51,10 @@ function walkTree(treeWalker) {
 		if (isElement(currentNode)) {
 			if (isElementType(currentNode, `p`)) {
 				markdown += `\n\n`;
+			}
+			if (isElementTypeOneOf(currentNode, [`h1`, `h2`, `h3`, `h4`, `h5`, `h6`])) {
+				const level = Number.parseInt(elementName(currentNode).slice(1));
+				markdown += `\n\n${"#".repeat(level)} `;
 			}
 		}
 		if (isText(currentNode)) {
