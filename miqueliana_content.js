@@ -25,7 +25,7 @@ function elementName(node) {
 }
 
 function isElementType(node, name) {
-	return isElement(node) && elementName(name);
+	return isElement(node) && elementName(node) === name;
 }
 
 function isText(node) {
@@ -46,7 +46,7 @@ function walkTree(treeWalker) {
 		console.log(currentNode);
 		if (isElement(currentNode)) {
 			if (isElementType(currentNode, `p`)) {
-				markdown += `\n`;
+				markdown += `\n\n`;
 			}
 		}
 		if (isText(currentNode)) {
