@@ -56,6 +56,18 @@ function walkTree(treeWalker) {
 				const level = Number.parseInt(elementName(currentNode).slice(1));
 				markdown += `\n\n${"#".repeat(level)} `;
 			}
+			if (isElementTypeOneOf(currentNode, [`ul`, `ol`])) {
+				markdown += `\n`;
+			}
+			if (isElementType(currentNode, `li`)) {
+				const parent = currentNode.parentElement;
+				if (isElementType(parent, `ul`)) {
+					markdown += `\n* `;
+				}
+				else if (isElementType(parent, `ol`)) {
+					markdown += `\n1. `
+				}
+			}
 		}
 		if (isText(currentNode)) {
 			if (!isEmptyText(currentNode)) {
