@@ -40,6 +40,34 @@ function isEmptyText(node) {
 	return isText(node) && /^\s+$/.test(node.nodeValue);
 }
 
+function handleParagraph(currentNode) {
+	const md = `\n\n`;
+	return { md };
+}
+
+function handleHeadings(currentNode) {
+	const level = Number.parseInt(elementName(currentNode).slice(1));
+	const md = `\n\n${"#".repeat(level)} `;
+	return { md };
+}
+
+function handleList(currentNode) {
+	const md = `\n`;
+	return { md };
+}
+
+function handleListItem(currentNode) {
+	const parent = currentNode.parentElement;
+	let md = ``;
+	if (isElementType(parent, `ul`)) {
+		md = `\n* `;
+	}
+	if (isElementType(parent, `ol`)) {
+		md = `\n1. `
+	}
+	return { md };
+}
+
 function walkTree(treeWalker) {
 	if (!treeWalker) {
 		return null;
@@ -48,25 +76,32 @@ function walkTree(treeWalker) {
 	let currentNode = treeWalker.firstChild();
 	while (currentNode) {
 		console.log(currentNode);
-		if (isElement(currentNode)) {
-			if (isElementType(currentNode, `p`)) {
-				markdown += `\n\n`;
+		switch(elementName(currentNode)) {
+			case `p`: {
+				const { md } = handleParagraph(currentNode);
+				markdown += md;
+				break;
 			}
-			if (isElementTypeOneOf(currentNode, [`h1`, `h2`, `h3`, `h4`, `h5`, `h6`])) {
-				const level = Number.parseInt(elementName(currentNode).slice(1));
-				markdown += `\n\n${"#".repeat(level)} `;
+			case `h1`:
+			case `h2`:
+			case `h3`:
+			case `h4`:
+			case `h5`:
+			case `h6`: {
+				const { md } = handleHeadings(currentNode);
+				markdown += md;
+				break;
 			}
-			if (isElementTypeOneOf(currentNode, [`ul`, `ol`])) {
-				markdown += `\n`;
+			case `ul`:
+			case `ol`: {
+				const { md } = handleList(currentNode);
+				markdown += md;
+				break;
 			}
-			if (isElementType(currentNode, `li`)) {
-				const parent = currentNode.parentElement;
-				if (isElementType(parent, `ul`)) {
-					markdown += `\n* `;
-				}
-				else if (isElementType(parent, `ol`)) {
-					markdown += `\n1. `
-				}
+			case `li`: {
+				const { md } = handleListItem(currentNode);
+				markdown += md;
+				break;
 			}
 		}
 		if (isText(currentNode)) {
