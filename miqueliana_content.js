@@ -57,14 +57,7 @@ function handleList(currentNode) {
 }
 
 function handleListItem(currentNode) {
-	const parent = currentNode.parentElement;
-	let md = ``;
-	if (isElementType(parent, `ul`)) {
-		md = `\n* `;
-	}
-	if (isElementType(parent, `ol`)) {
-		md = `\n1. `
-	}
+	const md = `\n* `;
 	return { md };
 }
 
