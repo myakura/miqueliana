@@ -79,6 +79,33 @@ function handleListItem(currentNode) {
 	return { md };
 }
 
+function insideElementType(node, name) {
+	return !!node.parentElement?.closest(name)
+}
+
+function insidePre(currentNode) {
+	return insideElementType(currentNode, `pre`);
+}
+
+function stripWhitespace(string) {
+	return string.replaceAll(/\s+/g, ` `).trim();
+}
+
+function handleText(currentNode) {
+	let md = ``;
+	if (insidePre(currentNode)) {
+		md = currentNode.nodeValue;
+	}
+	else if (isEmptyText(currentNode)) {
+		// do nothing
+	}
+	else {
+		let text = currentNode.nodeValue;
+		md = stripWhitespace(text);
+	}
+	return { md }
+}
+
 function walkTree(treeWalker) {
 	if (!treeWalker) {
 		return null;
@@ -116,9 +143,8 @@ function walkTree(treeWalker) {
 			}
 		}
 		if (isText(currentNode)) {
-			if (!isEmptyText(currentNode)) {
-				markdown += currentNode.nodeValue;
-			}
+			const { md } = handleText(currentNode);
+			markdown += md;
 		}
 		currentNode = treeWalker.nextNode();
 	}
