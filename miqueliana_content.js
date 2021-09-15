@@ -41,7 +41,12 @@ function isEmptyText(node) {
 }
 
 function handleParagraph(currentNode) {
-	const md = `\n\n`;
+	let md = `\n\n`;
+	const parent = currentNode.parentElement;
+	// fixme: probably not the case for all elements
+	if (isElement(parent) && currentNode === parent.firstElementChild) {
+		md = ``;
+	}
 	return { md };
 }
 
