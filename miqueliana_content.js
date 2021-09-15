@@ -71,7 +71,10 @@ function handleListItem(currentNode) {
 		md = `\n* `;
 	}
 	if (isElementType(parent, `ol`)) {
-		md = `\n1. `;
+		const items = [...parent.children];
+		const i = items.findIndex(item => item === currentNode) + 1;
+		// note: should the number space-padded?
+		md = `\n${i}. `;
 	}
 	return { md };
 }
