@@ -17,7 +17,7 @@ function createFragmentWalker(fragment) {
 }
 
 function isElement(node) {
-	return node.nodeType === Node.ELEMENT_NODE;
+	return node?.nodeType === Node.ELEMENT_NODE;
 }
 
 function elementName(node) {
@@ -57,7 +57,17 @@ function handleList(currentNode) {
 }
 
 function handleListItem(currentNode) {
-	const md = `\n* `;
+	let md = `\n* `;
+	const parent = currentNode.parentElement;
+	if (parent === null) {
+		md = `\n* `;
+	}
+	if (isElementType(parent, `ul`)) {
+		md = `\n* `;
+	}
+	if (isElementType(parent, `ol`)) {
+		md = `\n1. `;
+	}
 	return { md };
 }
 
