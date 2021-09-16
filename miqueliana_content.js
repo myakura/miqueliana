@@ -68,15 +68,29 @@ function handleListItem(currentNode) {
 		md = `\n* `;
 	}
 	if (isElementType(parent, `ul`)) {
-		md = `\n* `;
+		const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
+		const indent = `  `.repeat(nestLevel - 1);
+		md = `\n${indent}* `;
 	}
 	if (isElementType(parent, `ol`)) {
+		const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
+		const indent = `  `.repeat(nestLevel - 1);
 		const items = [...parent.children];
 		const i = items.findIndex(item => item === currentNode) + 1;
-		// note: should the number space-padded?
-		md = `\n${i}. `;
+		// note: should the number zero-padded?
+		md = `\n${indent}${i}. `;
 	}
 	return { md };
+}
+
+function getNestLevel(currentNode, boundaryElements) {
+	let level = 0;
+	let boundary = currentNode?.closest(boundaryElements.join(`, `));
+	while (boundary) {
+		level++;
+		boundary = boundary?.parentElement?.closest(boundaryElements.join(`, `));
+	}
+	return level;
 }
 
 function insideElementType(node, name) {
