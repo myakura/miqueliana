@@ -62,24 +62,19 @@ function handleList(currentNode) {
 }
 
 function handleListItem(currentNode) {
-	let md = `\n* `;
+	const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
+	const indent = `  `.repeat(nestLevel - 1);
+	let marker = `*`;
+
 	const parent = currentNode.parentElement;
-	if (parent === null) {
-		md = `\n* `;
-	}
-	if (isElementType(parent, `ul`)) {
-		const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
-		const indent = `  `.repeat(nestLevel - 1);
-		md = `\n${indent}* `;
-	}
 	if (isElementType(parent, `ol`)) {
-		const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
-		const indent = `  `.repeat(nestLevel - 1);
 		const items = [...parent.children];
-		const i = items.findIndex(item => item === currentNode) + 1;
+		const number = items.findIndex(item => item === currentNode) + 1;
 		// note: should the number zero-padded?
-		md = `\n${indent}${i}. `;
+		marker = `${number}.`;
 	}
+
+	const md = `\n${indent}${marker} `;
 	return { md };
 }
 
