@@ -115,9 +115,9 @@ function handleText(currentNode) {
 	return { md }
 }
 
-function walkTree(treeWalker) {
+function createMarkdown(treeWalker) {
 	if (!treeWalker) {
-		return null;
+		return ``;
 	}
 	let markdown = ``;
 	let currentNode = treeWalker.firstChild();
@@ -157,7 +157,7 @@ function walkTree(treeWalker) {
 		}
 		currentNode = treeWalker.nextNode();
 	}
-	console.log(markdown);
+	return markdown;
 }
 
 function handleMessage(message) {
@@ -167,7 +167,8 @@ function handleMessage(message) {
 	console.log(fragment);
 
 	const treeWalker = createFragmentWalker(fragment);
-	walkTree(treeWalker);
+	const markdown = createMarkdown(treeWalker);
+	console.log(markdown);
 }
 
 chrome.runtime.onMessage.addListener(handleMessage);
