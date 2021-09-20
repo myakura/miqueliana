@@ -44,20 +44,23 @@ function getCurrentTab() {
 	});
 }
 
-async function sendCommand(commandName) {
-	try {
-		const tab = await getCurrentTab();
-		chrome.tabs.sendMessage(tab.id, { message: commandName });
-	} catch (error) {
-		console.error(error);
-		flashBadge({ success: false });
-	}
+function sendMessage(tabId, message) {
+	return new Promise((resolve, reject) => {
+		chrome.tabs.sendMessage(tabId, message, null, (response) => {
+			if (chrome.runtime.lastError) {
+				reject(chrome.runtime.lastError);
+			}
+			resolve(response);
+		});
+	})
 }
 
 chrome.browserAction.onClicked.addListener(async () => {
 	try {
-		await sendCommand(`say-hello`);
-		copyText(`hello`);
+		const tab = await getCurrentTab();
+		const response = await sendMessage(tab.id, { message: `copy-markdown` });
+		console.log(response);
+		copyText(response.markdown);
 		flashBadge({ success: true });
 	}
 	catch (error) {

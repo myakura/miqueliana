@@ -160,7 +160,7 @@ function createMarkdown(treeWalker) {
 	return markdown;
 }
 
-function handleMessage(message) {
+function handleMessage(message, sender, sendResponse) {
 	console.log(message);
 
 	const fragment = getSelectionFragment();
@@ -169,6 +169,9 @@ function handleMessage(message) {
 	const treeWalker = createFragmentWalker(fragment);
 	const markdown = createMarkdown(treeWalker);
 	console.log(markdown);
+
+	sendResponse({ markdown: markdown.trim() })
+	return true;
 }
 
 chrome.runtime.onMessage.addListener(handleMessage);
