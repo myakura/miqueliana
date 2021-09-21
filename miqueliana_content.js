@@ -78,6 +78,13 @@ function handleListItem(currentNode) {
 	return { md };
 }
 
+function handleCodeElement(currentNode) {
+	const codeContent = currentNode.innerText;
+	const md = `\`${codeContent}\``;
+	const next = `nextSibling`;
+	return { md, next }
+}
+
 function getNestLevel(currentNode, boundaryElements) {
 	let level = 0;
 	let boundary = currentNode?.closest(boundaryElements.join(`, `));
@@ -97,7 +104,7 @@ function insidePre(currentNode) {
 }
 
 function stripWhitespace(string) {
-	return string.replaceAll(/\s+/g, ` `).trim();
+	return string.replaceAll(/\s+/g, ` `);
 }
 
 function handleText(currentNode) {
@@ -121,6 +128,7 @@ function createMarkdown(treeWalker) {
 	}
 	let markdown = ``;
 	let currentNode = treeWalker.firstChild();
+	let nextMethod = `nextNode`;
 	while (currentNode) {
 		console.log(currentNode);
 		switch(elementName(currentNode)) {
@@ -150,12 +158,19 @@ function createMarkdown(treeWalker) {
 				markdown += md;
 				break;
 			}
+			case `code`: {
+				const { md, next } = handleCodeElement(currentNode);
+				markdown += md;
+				nextMethod = next;
+				break;
+			}
 		}
 		if (isText(currentNode)) {
 			const { md } = handleText(currentNode);
 			markdown += md;
 		}
-		currentNode = treeWalker.nextNode();
+		currentNode = treeWalker[nextMethod]();
+		nextMethod = `nextNode`;
 	}
 	return markdown;
 }
