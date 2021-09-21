@@ -130,7 +130,6 @@ function createMarkdown(treeWalker) {
 	let currentNode = treeWalker.firstChild();
 	let nextMethod = `nextNode`;
 	while (currentNode) {
-		console.log(currentNode);
 		switch(elementName(currentNode)) {
 			case `p`: {
 				const { md } = handleParagraph(currentNode);
@@ -169,6 +168,10 @@ function createMarkdown(treeWalker) {
 			const { md } = handleText(currentNode);
 			markdown += md;
 		}
+		console.group(`currentNode:`, currentNode);
+		console.log(`markdown:`, markdown);
+		console.log(`nextMethod:`, `treeWalker.${nextMethod}()`);
+		console.groupEnd();
 		currentNode = treeWalker[nextMethod]();
 		nextMethod = `nextNode`;
 	}
@@ -176,14 +179,14 @@ function createMarkdown(treeWalker) {
 }
 
 function handleMessage(message, sender, sendResponse) {
-	console.log(message);
+	console.log(`message:`, message);
 
 	const fragment = getSelectionFragment();
-	console.log(fragment);
+	console.log(`fragment:`, fragment);
 
 	const treeWalker = createFragmentWalker(fragment);
 	const markdown = createMarkdown(treeWalker);
-	console.log(markdown);
+	console.log(`markdown:`, markdown);
 
 	sendResponse({ markdown: markdown.trim() })
 	return true;
