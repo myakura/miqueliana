@@ -63,7 +63,9 @@ function handleList(currentNode) {
 
 function handleListItem(currentNode) {
 	const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
-	const indent = `  `.repeat(nestLevel - 1);
+	console.log(`nestlevel`, nestLevel);
+	let indentLevel = (nestLevel > 0) ? nestLevel - 1 : 0;
+	const indent = `  `.repeat(indentLevel);
 	let marker = `*`;
 
 	const parent = currentNode.parentElement;
