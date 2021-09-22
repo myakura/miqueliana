@@ -65,7 +65,7 @@ function handleListItem(currentNode) {
 	const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
 	console.log(`nestlevel`, nestLevel);
 	let indentLevel = (nestLevel > 0) ? nestLevel - 1 : 0;
-	const indent = `  `.repeat(indentLevel);
+	let indentChars = `  `;
 	let marker = `*`;
 
 	const parent = currentNode.parentElement;
@@ -73,9 +73,11 @@ function handleListItem(currentNode) {
 		const items = [...parent.children];
 		const number = items.findIndex(item => item === currentNode) + 1;
 		// note: should the number zero-padded?
+		indentChars = `    `;
 		marker = `${number}.`;
 	}
 
+	const indent = indentChars.repeat(indentLevel);
 	const md = `\n${indent}${marker} `;
 	return { md };
 }
