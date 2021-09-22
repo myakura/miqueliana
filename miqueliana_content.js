@@ -81,8 +81,8 @@ function handleListItem(currentNode) {
 }
 
 function handleCodeElement(currentNode) {
-	const codeContent = currentNode.innerText;
-	const md = `\`${codeContent}\``;
+	const content = currentNode.innerText;
+	const md = `\`${content.replaceAll('`', '\`')}\``;
 	const next = `nextSibling`;
 	return { md, next }
 }
