@@ -125,6 +125,10 @@ function stripWhitespace(string) {
 	return string.replaceAll(/\s+/g, ` `);
 }
 
+function escapeBacktick(string) {
+	return string.replaceAll('`', '\`');
+}
+
 function handleText(currentNode) {
 	let md = ``;
 	if (insidePre(currentNode)) {
@@ -135,7 +139,9 @@ function handleText(currentNode) {
 	}
 	else {
 		let text = currentNode.nodeValue;
-		md = stripWhitespace(text);
+		text = stripWhitespace(text);
+		text = escapeBacktick(text);
+		md = text;
 	}
 	return { md }
 }
