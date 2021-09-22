@@ -87,6 +87,20 @@ function handleCodeElement(currentNode) {
 	return { md, next }
 }
 
+function handleStrongElement(currentNode) {
+	const content = currentNode.innerText;
+	const md = `**${content.replaceAll(`**`, `\*\*`)}**`;
+	const next = `nextSibling`;
+	return { md, next }
+}
+
+function handleEmElement(currentNode) {
+	const content = currentNode.innerText;
+	const md = `_${content.replaceAll(`_`, `\_`)}_`;
+	const next = `nextSibling`;
+	return { md, next }
+}
+
 function getNestLevel(currentNode, boundaryElements) {
 	let level = 0;
 	let boundary = currentNode?.closest(boundaryElements.join(`, `));
@@ -161,6 +175,18 @@ function createMarkdown(treeWalker) {
 			}
 			case `code`: {
 				const { md, next } = handleCodeElement(currentNode);
+				markdown += md;
+				nextMethod = next;
+				break;
+			}
+			case `strong`: {
+				const { md, next } = handleStrongElement(currentNode);
+				markdown += md;
+				nextMethod = next;
+				break;
+			}
+			case `em`: {
+				const { md, next } = handleEmElement(currentNode);
 				markdown += md;
 				nextMethod = next;
 				break;
