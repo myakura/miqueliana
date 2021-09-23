@@ -84,7 +84,7 @@ function handleListItem(currentNode) {
 
 function handleCodeElement(currentNode) {
 	const content = currentNode.innerText;
-	const md = `\`${content.replaceAll('`', '\`')}\``;
+	const md = '`' + escapeBacktick(content) + '`';
 	const next = `nextSibling`;
 	return { md, next }
 }
