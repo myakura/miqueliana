@@ -61,6 +61,11 @@ function handleList(currentNode) {
 	return { md };
 }
 
+function handleHr(currentNode) {
+	const md = `\n\n***\n`;
+	return { md };
+}
+
 function handleListItem(currentNode) {
 	const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
 	console.log(`nestlevel`, nestLevel);
@@ -178,6 +183,11 @@ function createMarkdown(treeWalker) {
 			}
 			case `li`: {
 				const { md } = handleListItem(currentNode);
+				markdown += md;
+				break;
+			}
+			case `hr`: {
+				const { md } = handleHr(currentNode);
 				markdown += md;
 				break;
 			}
