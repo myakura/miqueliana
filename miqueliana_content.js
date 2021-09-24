@@ -66,6 +66,11 @@ function handleHr(currentNode) {
 	return { md };
 }
 
+function handleBr(currentNode) {
+	const md = `  \n`;
+	return { md };
+}
+
 function handleListItem(currentNode) {
 	const nestLevel = getNestLevel(currentNode, [`ul`, `ol`]);
 	console.log(`nestlevel`, nestLevel);
@@ -127,7 +132,7 @@ function insidePre(currentNode) {
 }
 
 function stripWhitespace(string) {
-	return string.replaceAll(/\s+/g, ` `);
+	return string.replaceAll(/\s+(?!  \n)/g, ` `);
 }
 
 function escapeBacktick(string) {
@@ -188,6 +193,11 @@ function createMarkdown(treeWalker) {
 			}
 			case `hr`: {
 				const { md } = handleHr(currentNode);
+				markdown += md;
+				break;
+			}
+			case `br`: {
+				const { md } = handleBr(currentNode);
 				markdown += md;
 				break;
 			}
