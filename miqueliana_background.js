@@ -55,10 +55,10 @@ function sendMessage(tabId, message) {
 	})
 }
 
-chrome.browserAction.onClicked.addListener(async () => {
+async function executeCommand(commandName) {
 	try {
 		const tab = await getCurrentTab();
-		const response = await sendMessage(tab.id, { message: `copy-markdown` });
+		const response = await sendMessage(tab.id, { message: commandName });
 		console.log(response);
 		copyText(response.markdown);
 		flashBadge({ success: true });
@@ -67,4 +67,12 @@ chrome.browserAction.onClicked.addListener(async () => {
 		console.error(error);
 		flashBadge({ success: false });
 	}
+}
+
+chrome.browserAction.onClicked.addListener(async () => {
+	await executeCommand(`copy-markdown`);
+});
+
+chrome.commands.onCommand.addListener(async (commandName) => {
+	await executeCommand(commandName);
 });

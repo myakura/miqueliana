@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Miqueliana",
-	"version": "0.0.41",
+	"version": "0.0.42",
 	"background": {
 		"scripts": ["miqueliana_background.js"]
 	},
@@ -14,5 +14,13 @@
 			"matches": ["*://*/*"],
 			"js": ["miqueliana_content.js"]
 		}
-	]
+	],
+	"commands": {
+		"copy-markdown": {
+			"description": "Copy selection as markdown",
+			"suggested_key": {
+				"default": "Alt+Shift+M"
+			}
+		}
+	}
 }
