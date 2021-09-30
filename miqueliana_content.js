@@ -92,6 +92,20 @@ function handleListItem(currentNode) {
 	return { md };
 }
 
+function handlePreElement(currentNode) {
+	const content = currentNode.innerText;
+
+	let lang = ``;
+	const childCode = currentNode.querySelector(`:scope > code`);
+	if (!!childCode && childCode.matches(`[class*="language-"]`)) {
+		lang = /language-(\S+)/.exec(childCode.className)[1];
+	}
+
+	const md = '\n\n```' + lang + '\n' + content + '\n```';
+	const next = `nextSibling`;
+	return { md, next }
+}
+
 function handleCodeElement(currentNode) {
 	const content = currentNode.innerText;
 	const md = '`' + escapeBacktick(content) + '`';
@@ -199,6 +213,12 @@ function createMarkdown(treeWalker) {
 			case `br`: {
 				const { md } = handleBr(currentNode);
 				markdown += md;
+				break;
+			}
+			case `pre`: {
+				const { md, next } = handlePreElement(currentNode);
+				markdown += md;
+				nextMethod = next;
 				break;
 			}
 			case `code`: {
