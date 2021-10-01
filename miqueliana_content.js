@@ -155,13 +155,7 @@ function escapeBacktick(string) {
 
 function handleText(currentNode) {
 	let md = ``;
-	if (insidePre(currentNode)) {
-		md = currentNode.nodeValue;
-	}
-	else if (isEmptyText(currentNode)) {
-		// do nothing
-	}
-	else {
+	if (!isEmptyText(currentNode)) {
 		let text = currentNode.nodeValue;
 		text = stripWhitespace(text);
 		text = escapeBacktick(text);
