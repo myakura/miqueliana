@@ -153,12 +153,17 @@ function escapeBacktick(string) {
 	return string.replaceAll('`', '\`');
 }
 
+function escapeOpenSquareBracket(string) {
+	return string.replaceAll('[', '\[');
+}
+
 function handleText(currentNode) {
 	let md = ``;
 	if (!isEmptyText(currentNode)) {
 		let text = currentNode.nodeValue;
 		text = stripWhitespace(text);
 		text = escapeBacktick(text);
+		text = escapeOpenSquareBracket(text);
 		md = text;
 	}
 	return { md }
