@@ -146,7 +146,15 @@ function insidePre(currentNode) {
 	return insideElementType(currentNode, `pre`);
 }
 
-function stripWhitespace(string) {
+function stripLeadingWhitespace(string) {
+	return string.trimStart();
+}
+
+function stripTrailingWhitespace(string) {
+	return string.replaceAll(/(?<=\S) $/g, ``);
+}
+
+function coalesceLinebreakAndWhitespace(string) {
 	return string.replaceAll(/\s+(?!  \n)/g, ` `);
 }
 
@@ -162,7 +170,9 @@ function handleText(currentNode) {
 	let md = ``;
 	if (!isEmptyText(currentNode)) {
 		let text = currentNode.nodeValue;
-		text = stripWhitespace(text);
+		text = coalesceLinebreakAndWhitespace(text);
+		text = stripLeadingWhitespace(string);
+		text = stripTrailingWhitespace(string);
 		text = escapeBacktick(text);
 		text = escapeOpenSquareBracket(text);
 		md = text;
