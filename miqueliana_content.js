@@ -82,7 +82,6 @@ function handleListItem(currentNode) {
 	if (isElementType(parent, `ol`)) {
 		const items = [...parent.children];
 		const number = items.findIndex(item => item === currentNode) + 1;
-		// note: should the number zero-padded?
 		indentChars = `    `;
 		marker = `${number}.`;
 	}
