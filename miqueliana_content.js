@@ -57,7 +57,9 @@ function handleHeadings(currentNode) {
 }
 
 function handleList(currentNode) {
-	const md = `\n`;
+	const parent = currentNode.parentElement;
+	const listLeading = isElementTypeOneOf(parent, [`ul`, `ol`]) ? `\n` : ``;
+	const md = listLeading;
 	return { md };
 }
 
