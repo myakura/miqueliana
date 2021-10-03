@@ -171,8 +171,8 @@ function handleText(currentNode) {
 	if (!isEmptyText(currentNode)) {
 		let text = currentNode.nodeValue;
 		text = coalesceLinebreakAndWhitespace(text);
-		text = stripLeadingWhitespace(string);
-		text = stripTrailingWhitespace(string);
+		text = stripLeadingWhitespace(text);
+		text = stripTrailingWhitespace(text);
 		text = escapeBacktick(text);
 		text = escapeOpenSquareBracket(text);
 		md = text;
