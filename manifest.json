@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Miqueliana",
-	"version": "0.0.48",
+	"version": "0.0.49",
 	"background": {
 		"scripts": ["miqueliana_background.js"]
 	},
