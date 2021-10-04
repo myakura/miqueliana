@@ -20,16 +20,16 @@ function isElement(node) {
 	return node?.nodeType === Node.ELEMENT_NODE;
 }
 
-function elementName(node) {
+function getElementName(node) {
 	return node?.tagName?.toLowerCase();
 }
 
 function isElementType(node, name) {
-	return isElement(node) && elementName(node) === name;
+	return isElement(node) && getElementName(node) === name;
 }
 
 function isElementTypeOneOf(node, names) {
-	return isElement(node) && names.includes(elementName(node));
+	return isElement(node) && names.includes(getElementName(node));
 }
 
 function isText(node) {
@@ -51,7 +51,7 @@ function handleParagraph(currentNode) {
 }
 
 function handleHeadings(currentNode) {
-	const level = Number.parseInt(elementName(currentNode).slice(1));
+	const level = Number.parseInt(getElementName(currentNode).slice(1));
 	const md = `\n\n${"#".repeat(level)} `;
 	return { md };
 }
@@ -188,7 +188,7 @@ function createMarkdown(treeWalker) {
 	let currentNode = treeWalker.firstChild();
 	let nextMethod = `nextNode`;
 	while (currentNode) {
-		switch(elementName(currentNode)) {
+		switch(getElementName(currentNode)) {
 			case `p`: {
 				const { md } = handleParagraph(currentNode);
 				markdown += md;
