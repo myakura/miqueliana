@@ -1,7 +1,10 @@
 {
 	"manifest_version": 2,
 	"name": "Miqueliana",
-	"version": "0.0.51",
+	"version": "0.0.52",
+	"permissions": [
+		"clipboardWrite"
+	],
 	"background": {
 		"scripts": ["miqueliana_background.js"]
 	},
