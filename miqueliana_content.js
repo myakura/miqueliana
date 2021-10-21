@@ -93,7 +93,7 @@ function handleListItem(currentNode) {
 	return { md };
 }
 
-function handlePreElement(currentNode) {
+function handlePre(currentNode) {
 	const content = currentNode.innerText;
 
 	let lang = ``;
@@ -107,21 +107,21 @@ function handlePreElement(currentNode) {
 	return { md, next }
 }
 
-function handleCodeElement(currentNode) {
+function handleCode(currentNode) {
 	const content = currentNode.innerText;
 	const md = '`' + escapeBacktick(content) + '`';
 	const next = `nextSibling`;
 	return { md, next }
 }
 
-function handleStrongElement(currentNode) {
+function handleStrong(currentNode) {
 	const content = currentNode.innerText;
 	const md = `**${content.replaceAll(`**`, `\*\*`)}**`;
 	const next = `nextSibling`;
 	return { md, next }
 }
 
-function handleEmElement(currentNode) {
+function handleEm(currentNode) {
 	const content = currentNode.innerText;
 	const md = `_${content.replaceAll(`_`, `\_`)}_`;
 	const next = `nextSibling`;
@@ -226,25 +226,25 @@ function createMarkdown(treeWalker) {
 				break;
 			}
 			case `pre`: {
-				const { md, next } = handlePreElement(currentNode);
+				const { md, next } = handlePre(currentNode);
 				markdown += md;
 				nextMethod = next;
 				break;
 			}
 			case `code`: {
-				const { md, next } = handleCodeElement(currentNode);
+				const { md, next } = handleCode(currentNode);
 				markdown += md;
 				nextMethod = next;
 				break;
 			}
 			case `strong`: {
-				const { md, next } = handleStrongElement(currentNode);
+				const { md, next } = handleStrong(currentNode);
 				markdown += md;
 				nextMethod = next;
 				break;
 			}
 			case `em`: {
-				const { md, next } = handleEmElement(currentNode);
+				const { md, next } = handleEm(currentNode);
 				markdown += md;
 				nextMethod = next;
 				break;
