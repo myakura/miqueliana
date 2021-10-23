@@ -104,28 +104,28 @@ function handlePre(currentNode) {
 
 	const md = '\n\n```' + lang + '\n' + content + '\n```';
 	const next = `nextSibling`;
-	return { md, next }
+	return { md, next };
 }
 
 function handleCode(currentNode) {
 	const content = currentNode.innerText;
 	const md = '`' + escapeBacktick(content) + '`';
 	const next = `nextSibling`;
-	return { md, next }
+	return { md, next };
 }
 
 function handleStrong(currentNode) {
 	const content = currentNode.innerText;
 	const md = `**${content.replaceAll(`**`, `\*\*`)}**`;
 	const next = `nextSibling`;
-	return { md, next }
+	return { md, next };
 }
 
 function handleEm(currentNode) {
 	const content = currentNode.innerText;
 	const md = `_${content.replaceAll(`_`, `\_`)}_`;
 	const next = `nextSibling`;
-	return { md, next }
+	return { md, next };
 }
 
 function getNestLevel(currentNode, boundaryElements) {
@@ -139,7 +139,7 @@ function getNestLevel(currentNode, boundaryElements) {
 }
 
 function insideElementType(node, name) {
-	return !!node.parentElement?.closest(name)
+	return !!node.parentElement?.closest(name);
 }
 
 function insidePre(currentNode) {
@@ -183,7 +183,7 @@ function handleText(currentNode) {
 		}
 		md = text;
 	}
-	return { md }
+	return { md };
 }
 
 function createMarkdown(treeWalker) {
@@ -194,7 +194,7 @@ function createMarkdown(treeWalker) {
 	let currentNode = treeWalker.firstChild();
 	let nextMethod = `nextNode`;
 	while (currentNode) {
-		switch(getElementName(currentNode)) {
+		switch (getElementName(currentNode)) {
 			case `p`: {
 				const { md } = handleParagraph(currentNode);
 				markdown += md;
@@ -280,7 +280,7 @@ function handleMessage(message, sender, sendResponse) {
 	const markdown = createMarkdown(treeWalker);
 	console.log(`markdown:`, markdown);
 
-	sendResponse({ markdown: markdown.trim() })
+	sendResponse({ markdown: markdown.trim() });
 	return true;
 }
 

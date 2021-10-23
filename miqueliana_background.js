@@ -52,7 +52,7 @@ function sendMessage(tabId, message) {
 			}
 			resolve(response);
 		});
-	})
+	});
 }
 
 async function executeCommand(commandName) {
