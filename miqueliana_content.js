@@ -167,14 +167,20 @@ function escapeOpenSquareBracket(string) {
 }
 
 function handleText(currentNode) {
+	const parent = currentNode.parent;
 	let md = ``;
 	if (!isEmptyText(currentNode)) {
 		let text = currentNode.nodeValue;
 		text = coalesceLinebreakAndWhitespace(text);
-		text = stripLeadingWhitespace(text);
-		text = stripTrailingWhitespace(text);
 		text = escapeBacktick(text);
 		text = escapeOpenSquareBracket(text);
+
+		if (currentNode === parent?.firstChild) {
+			text = stripLeadingWhitespace(text);
+		}
+		if (currentNode === parent?.lastChild) {
+			text = stripTrailingWhitespace(text);
+		}
 		md = text;
 	}
 	return { md }
