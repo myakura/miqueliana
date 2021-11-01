@@ -186,6 +186,13 @@ function handleText(currentNode) {
 	return { md };
 }
 
+function cleanupEmptyContentLines(text) {
+	return text
+		.replaceAll(/^#+\s+\n/g, ``)
+		.replaceAll(/^\*\s+\n/g, ``)
+		.replaceAll(/^\d+\.\s+\n/g, ``);
+}
+
 function createMarkdown(treeWalker) {
 	if (!treeWalker) {
 		return ``;
@@ -267,6 +274,7 @@ function createMarkdown(treeWalker) {
 		currentNode = treeWalker[nextMethod]();
 		nextMethod = `nextNode`;
 	}
+	markdown = cleanupEmptyContentLines(markdown);
 	return markdown;
 }
 
