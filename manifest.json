@@ -1,7 +1,8 @@
 {
 	"manifest_version": 2,
 	"name": "Miqueliana",
-	"version": "0.0.56",
+	"description": "Copy selection as Markdown",
+	"version": "0.0.57",
 	"permissions": [
 		"clipboardWrite"
 	],
