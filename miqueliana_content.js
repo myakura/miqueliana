@@ -97,12 +97,12 @@ function handlePre(currentNode) {
 	const content = currentNode.innerText;
 
 	let lang = ``;
-	const childCode = currentNode.querySelector(`:scope > code`);
-	if (!!childCode && childCode.matches(`[class*="language-"]`)) {
+	const childCode = currentNode.querySelector(`:scope > code[class*="language-"]`);
+	if (!!childCode) {
 		lang = /language-(\S+)/.exec(childCode.className)[1];
 	}
 
-	const md = '\n\n```' + lang + '\n' + content + '\n```';
+	const md = '\n\n```' + lang + '\n' + content.trim() + '\n```';
 	const next = `nextSibling`;
 	return { md, next };
 }
