@@ -16,6 +16,9 @@ function flashBadge({ success = true }) {
 }
 
 function copyText(text) {
+	if (!text) {
+		return;
+	}
 	const textarea = document.createElement(`textarea`);
 	document.body.append(textarea);
 
