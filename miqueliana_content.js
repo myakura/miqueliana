@@ -63,6 +63,16 @@ function handleList(currentNode) {
 	return { md };
 }
 
+function handleDt(currentNode) {
+	const md = (currentNode.previousSibling?.tagName === `DD`) ? `\n\n` : `\n`;
+	return { md };
+}
+
+function handleDd(currentNode) {
+	const md = `\n`;
+	return { md };
+}
+
 function handleHr(currentNode) {
 	const md = `\n\n***\n`;
 	return { md };
@@ -220,6 +230,16 @@ function createMarkdown(treeWalker) {
 			case `ul`:
 			case `ol`: {
 				const { md } = handleList(currentNode);
+				markdown += md;
+				break;
+			}
+			case `dt`: {
+				const { md } = handleDt(currentNode);
+				markdown += md;
+				break;
+			}
+			case `dd`: {
+				const { md } = handleDd(currentNode);
 				markdown += md;
 				break;
 			}
