@@ -2,17 +2,17 @@
 	"manifest_version": 2,
 	"name": "Miqueliana",
 	"description": "Copy selection as Markdown",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"permissions": [
 		"clipboardWrite"
 	],
 	"background": {
 		"scripts": ["miqueliana_background.js"]
 	},
-  "browser_action": {
-    "default_title": "Copy selection as Markdown",
-    "default_icon": "icon_gray.png"
-  },
+	"browser_action": {
+		"default_title": "Copy selection as Markdown",
+		"default_icon": "icon_gray.png"
+	},
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
