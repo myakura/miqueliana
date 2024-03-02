@@ -86,6 +86,9 @@ function updateIcon(darkModeChange) {
 }
 
 const mqDarkMode = window.matchMedia(`(prefers-color-scheme: dark)`);
-mqDarkMode.addEventListener(`change`, updateIcon);
-updateIcon(mqDarkMode);
 
+chrome.windows.onFocusChanged.addListener(() => {
+	updateIcon(mqDarkMode);
+});
+
+updateIcon(mqDarkMode);
