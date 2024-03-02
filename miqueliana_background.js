@@ -2,15 +2,14 @@ function flashBadge({ success = true }) {
 	// credit: https://github.com/chitsaou/copy-as-markdown
 	const text = success ? `✔` : `✘`;
 	const color = success ? `hsl(135, 70%, 30%)` : `hsl(0, 80%, 40%)`;
-	const emptyText = ``;
-	const transparent = `#000f`;
+	const transparent = `rgba(0, 0, 0, 0)`;
 	const timeout = 1000;
 
 	chrome.browserAction.setBadgeText({ text: text });
 	chrome.browserAction.setBadgeBackgroundColor({ color: color });
 
 	setTimeout(() => {
-		chrome.browserAction.setBadgeText({ text: emptyText });
+		chrome.browserAction.setBadgeText({ text: `` });
 		chrome.browserAction.setBadgeBackgroundColor({ color: transparent });
 	}, timeout);
 }
