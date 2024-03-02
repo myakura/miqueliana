@@ -79,16 +79,15 @@ chrome.commands.onCommand.addListener(async (commandName) => {
 	await executeCommand(commandName);
 });
 
-function updateIcon(darkModeChange) {
-	const isDarkMode = darkModeChange?.matches ?? false;
-	const path = isDarkMode ? `icon_white.png` : `icon_black.png`;
+function updateIcon(isDarkMode) {
+	const path = isDarkMode ? 'icon_white.png' : 'icon_black.png';
 	chrome.browserAction.setIcon({ path: path });
 }
 
-const mqDarkMode = window.matchMedia(`(prefers-color-scheme: dark)`);
+const mqDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
 
 chrome.windows.onFocusChanged.addListener(() => {
-	updateIcon(mqDarkMode);
+	updateIcon(mqDarkMode.matches);
 });
 
-updateIcon(mqDarkMode);
+updateIcon(mqDarkMode.matches);
