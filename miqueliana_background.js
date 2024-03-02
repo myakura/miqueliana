@@ -81,7 +81,7 @@ chrome.commands.onCommand.addListener(async (commandName) => {
 
 function updateIcon(darkModeChange) {
 	const isDarkMode = darkModeChange?.matches ?? false;
-	const path = isDarkMode ? `icon_dark.png` : `icon_light.png`;
+	const path = isDarkMode ? `icon_white.png` : `icon_black.png`;
 	chrome.browserAction.setIcon({ path: path });
 }
 
