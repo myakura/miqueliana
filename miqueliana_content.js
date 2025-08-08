@@ -143,16 +143,14 @@ function nodeToString(node) {
 				lang = /language-(\\S+)/.exec(childCode.className)[1] || '';
 			}
 			return `\n\n\
-```${lang}\n${node.innerText.trim()}\n\
-```\n\n`;
+\`\`\`${lang}\n${node.innerText.trim()}\n\
+\`\`\`\n\n`;
 		}
 		case `code`: {
 			if (insidePre(node)) {
 				return children;
 			}
-			return `
-```${children}
-````;
+			return `\`${children}\``;
 		}
 		case `strong`:
 		case `b`: {
