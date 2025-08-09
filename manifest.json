@@ -2,10 +2,8 @@
 	"manifest_version": 2,
 	"name": "Miqueliana",
 	"description": "Copy selection as Markdown",
-	"version": "0.1.5",
-	"permissions": [
-		"clipboardWrite"
-	],
+	"version": "0.2.0",
+	"permissions": ["clipboardWrite"],
 	"background": {
 		"scripts": ["miqueliana_background.js"]
 	},
