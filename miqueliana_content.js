@@ -158,10 +158,10 @@ function nodeToString(node) {
 		case 'i': {
 			return `_${children}_`;
 		}
-		case 'a': {
-			const href = node.getAttribute('href');
-			return `[${children}](${href})`;
-		}
+		// case 'a': {
+		// 	const href = node.getAttribute('href');
+		// 	return `[${children}](${href})`;
+		// }
 		case 'img': {
 			const src = node.getAttribute('src');
 			const alt = node.getAttribute('alt') || '';
